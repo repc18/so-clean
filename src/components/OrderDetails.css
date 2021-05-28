@@ -1,0 +1,10 @@
+.inline-div {
+    display: block;
+    text-align: center;
+  }
+  
+h4
+  {
+    display: inline-block;
+    text-align: center;
+  }
