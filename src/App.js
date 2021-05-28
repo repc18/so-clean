@@ -29,17 +29,32 @@ function App(){
   const { email, setEmail } = useEmail();
 
   if(!token) {
-    return <div><MainHeader/><main> 
-    <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail}/></main>
+    return (
+    <div>
+
+    <MainHeader/>
+
+    
+    <main> 
+    <Route path="/Login">
+      <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail}/>
+      </Route>
+    <Route path="/" exact>
+      <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail}/>
+      </Route>  
+    <Route path="/SignUp">
+      <SignUp/>
+    </Route>
+
+
+      </main>
     </div>
+    )
   }
 
 
   return(
-      <div>
-
-
-        
+      <div>        
         <MainHeader/>
         <main>  
         <Route path="/" exact >
