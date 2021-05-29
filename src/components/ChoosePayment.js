@@ -5,15 +5,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Button } from '@material-ui/core';
-import Header from "./header/Header";
+import Header from "./Layout-Booking/Header";
+import BookingFooter from "./Layout-Booking/BookingFooter";
 import './ChoosePayment.css';
 import {Link, useHistory } from "react-router-dom";
+import Footer from '../components/Layout/Footer';
 
 
 
 function ChoosePayment(props){
   let history = useHistory();
-  const { payment, setPayment, setPage, totalHours, totalWorker, dateChosen, timeChosen, roomOptions} = props;
+  const { payment, setPayment, setPage, totalHours, totalWorker, dateChosen, timeChosen, roomOptions, totalManhour, totalPrice} = props;
 
     // const [payment, setPayment] = useState(null)
 
@@ -24,18 +26,18 @@ function ChoosePayment(props){
 
     const handleNextPage = () => {
       sessionStorage.setItem('roomData', JSON.stringify({
-        totalHours, totalWorker, dateChosen, timeChosen, payment, roomOptions
+        totalHours, totalWorker, dateChosen, timeChosen, payment, roomOptions, totalManhour, totalPrice
       }))
       history.push('/orderdetails')
     }
 
     
     return (
-      <FormControl component="fieldset">
-        <Header></Header>
+      <div>
+        {/* <Header></Header> */}
+        <FormControl component="fieldset">
         <br></br>
-        <br></br>
-        <br></br>
+
         <h1 className="text-center">Choose Payment Method</h1>
         <RadioGroup className="text-center" aria-label="payment-method" name="payment1" value={payment} onChange={handleChange}>
           <FormControlLabel value="Cash" control={<Radio />} label="Cash" />
@@ -49,6 +51,10 @@ function ChoosePayment(props){
             <Button color="primary">Back</Button>
             </div>
       </FormControl>
+      {/* <BookingFooter></BookingFooter> */}
+      {/* <Footer></Footer> */}
+      </div>
+      
     );
 }
 

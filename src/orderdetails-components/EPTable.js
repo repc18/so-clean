@@ -19,6 +19,8 @@ function createData(roomname, quantity, size) {
 }
 
 const rows = [
+  // {bedroom: {quantity: "2", size: 0.5}, livingroom: {quantity: 0, size: 0.5},…}
+  
   createData('Bedroom', 3, "Medium"),
   createData('Living Room', 1, "Medium"),
   createData('Toilet', 2, "Small"),

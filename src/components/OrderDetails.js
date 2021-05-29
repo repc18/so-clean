@@ -6,6 +6,10 @@ import { Button } from '@material-ui/core';
 // import Button from '../orderdetails-components/Button';
 import Table from '../orderdetails-components/EPTable';
 import './OrderDetails.css';
+import Header from "./Layout-Booking/Header";
+import BookingFooter from './Layout-Booking/BookingFooter';
+import Footer from '../components/Layout/Footer';
+
 
 function OrderDetails () {
     const history = useHistory()
@@ -14,24 +18,24 @@ const expenses = [
     {
       id: 'e1',
       title: 'Name  :',
-      data: "John",
+      data: JSON.parse(sessionStorage.getItem("name")),
       // date: new Date(2020, 7, 14),
     },
     { id: 'e2', 
     title: 'Address   : ', 
-    data: 'Daan District', 
+    data: JSON.parse(sessionStorage.getItem("address")), 
     // date: new Date(2021, 2, 12) 
   },
     {
       id: 'e3',
       title: 'Telephone:',
-      data: '09090909',
+      data: JSON.parse(sessionStorage.getItem("phone")),
       // date: new Date(2021, 2, 28),
     },
     {
       id: 'e4',
       title: 'Amount:',
-      amount: 450,
+      amount: JSON.parse(sessionStorage.getItem('roomData')).totalPrice,
       // date: new Date(2021, 5, 12),
     }
   ];
@@ -39,6 +43,8 @@ const expenses = [
   const fetchData = async (roomData) => {
       try {
           console.log(roomData);
+          console.log(String(JSON.parse(sessionStorage.getItem('area'))))
+          console.log(String(JSON.parse(sessionStorage.getItem('address'))))
           const requestOptions = {
             // mode: 'no-cors',
             method: 'POST',
@@ -46,15 +52,15 @@ const expenses = [
               'Content-Type': 'application/json',
               'Authorization': JSON.parse(sessionStorage.getItem('token'))},
             body: JSON.stringify({
-              area: 'Daan',
-              address: 'NTUST',
+              area: roomData.area,
+              address: roomData.address,
               orderDetails: {
                   date: roomData.dateChosen,
                   workersAmount: roomData.totalWorker,
-                  price: 500,
+                  price: roomData.totalPrice,
                   shift: [roomData.timeChosen, roomData.endingHour],
                   paymentMethod: roomData.payment,
-                  manhour: 30
+                  manhour: roomData.totalManhour
               },
               startingHour: roomData.timeChosen,
               endingHour: roomData.endingHour
@@ -74,11 +80,16 @@ const expenses = [
 
   useEffect(() => {
     const roomData = JSON.parse(sessionStorage.getItem('roomData'))
+    const area1 = JSON.parse(sessionStorage.getItem("area"))
+    const address1 = JSON.parse(sessionStorage.getItem("address"))
     if(!roomData){
         return history.push('/ChooseRoom')
     }
     const endingTime = Number(roomData.timeChosen) + Number(roomData.totalHours);
     Object.assign(roomData,{endingHour: endingTime});
+    Object.assign(roomData,{area: String(area1)});
+    Object.assign(roomData,{address: String(address1)});
+
     setData(roomData)
 
     // const result = fetchData(roomData)
@@ -88,7 +99,8 @@ const expenses = [
 
   return(
   <div>
-    <p>E-clean</p>
+  {/* <Header></Header> */}
+  <br></br>
     <h2 align="center">Order Details</h2>
     
     <ExpenseItem
@@ -114,9 +126,9 @@ const expenses = [
     <h2></h2>
     <h2></h2>
 
-    <Table></Table>
-    
+   
     {data && <>
+    <br></br>
     <br></br>
       <div className="inline-div">
         <h4 align="center">Date:</h4>
@@ -140,16 +152,22 @@ const expenses = [
     <h2></h2>
     <h2></h2>
     <h2></h2>
-    <Button variant="contained" color="primary" onClick ={async () => {
+    <br></br>
+    <div className="text-center">
+    <Button variant="outlined" color="primary" onClick ={async () => {
       fetchData(data)
       // sessionStorage.setItem('workerIds', JSON.stringify({worker_id}))
       // history.push("/AssistedWorkers")
     }}>Confirm</Button>
-    <Button variant="contained" color="secondary">
+    <Button variant="outlined" color="secondary">
         Cancel
       </Button>
+      <br></br>
+      <br></br>
+    </div>
 
-    
+  {/* <BookingFooter></BookingFooter> */}
+  {/* <Footer></Footer> */}
   </div>
 );
 }

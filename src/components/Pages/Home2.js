@@ -4,12 +4,12 @@ import classes from './Home.module.css';
 
 
 
-const Home = () => {
+const Home2 = () => {
   return (
     <section className={classes.starting}>
-      <h1>Welcome!  Please login!</h1>
+      <h1>Welcome! Please create a new order!</h1>
     </section>
   );
 };
 
-export default Home
+export default Home2

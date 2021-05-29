@@ -9,7 +9,7 @@ import usePhone from '../Pages/usePhone';
 import useEmail from '../Pages/useEmail';
 
 
-const MainHeader = () => {
+const SecondHeader = () => {
   const { token, setToken } = useToken();
   const { name, setName } = useName();
   const { customerId, setId } = useId();
@@ -29,6 +29,17 @@ const MainHeader = () => {
       routeChange();
     }
 
+    const routeChange2 = () =>{ 
+      let path = `chooseRoom`; 
+      history.push(path);
+    }
+  
+    function confirm2() {
+      sessionStorage.removeItem("roomData")
+      sessionStorage.removeItem("workerIds")
+      routeChange2();
+    }
+
     return (
         <header className={classes.header}>
       <Link to='/'>
@@ -37,22 +48,24 @@ const MainHeader = () => {
         <nav>
             <ul>
                 <li>
+                <Link onClick={confirm2}
                 
-                <Link 
-                onClick={() => {
-                history.push(`Login`)}}
-                >
-                  Log in
-                </Link>
-                </li>
-                <li>
-                <Link to='/SignUp'>Sign Up</Link>
+                >Create New Order</Link>
                 </li>
             </ul>
         </nav>
+        
+        <Link onClick={() => {
+                  logout();
+                  window.location.reload(false)}
+                }
+                
+                >
+                  Log out
+                </Link>
             
     </header>
     );
 };
 
-export default MainHeader;
+export default SecondHeader;

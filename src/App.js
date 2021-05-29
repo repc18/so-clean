@@ -12,13 +12,19 @@ import useName from './components/Pages/useName';
 import useId from './components/Pages/useId';
 import usePhone from './components/Pages/usePhone';
 import useEmail from './components/Pages/useEmail';
+import useAddress from './components/Pages/useAddress';
+import useArea from './components/Pages/useArea';
 
 
 import Login from './components/Pages/Login';
 import SignUp from './components/Pages/SignUp';
-import MainHeader from './components/Layout/MainHeader';
-import Footer from './components/Layout/Footer';
 import Home from './components/Pages/Home';
+import Footer from './components/Layout/Footer';
+
+import MainHeader from './components/Layout/MainHeader';
+import LogoutPage from './components/Pages/LogoutPage';
+import SecondHeader from './components/Layout/SecondHeader';
+import Home2 from './components/Pages/Home2';
 
 function App(){
 
@@ -27,6 +33,8 @@ function App(){
   const { customerId, setId } = useId();
   const { phone, setPhone } = usePhone();
   const { email, setEmail } = useEmail();
+  const { address, setAddress } = useAddress();
+  const { area, setArea } = useArea();
 
   if(!token) {
     return (
@@ -37,16 +45,21 @@ function App(){
     
     <main> 
     <Route path="/Login">
-      <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail}/>
+      <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail} setAddress={setAddress} setArea={setArea}/>
       </Route>
     <Route path="/" exact>
-      <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail}/>
+        <Home/>
       </Route>  
     <Route path="/SignUp">
       <SignUp/>
     </Route>
 
 
+    <Route path="/Logout">
+      <LogoutPage/>
+    </Route>
+
+    <Footer/>
       </main>
     </div>
     )
@@ -55,17 +68,21 @@ function App(){
 
   return(
       <div>        
-        <MainHeader/>
+        <SecondHeader/>
         <main>  
-        <Route path="/" exact >
-          <Home/>
-        </Route>    
-        <Route path="/Login ">
-          <Login setToken={setToken}/>
-        </Route>
-        <Route path="/SignUp">
-          <SignUp />
-        </Route>
+       <Route path="/" exact >
+        <Home2/>
+      </Route>    
+      <Route path="/Login ">
+        <Login setToken={setToken} setName={setName} setId={setId} setPhone={setPhone} setEmail={setEmail} setAddress={setAddress} setArea={setArea}/>
+      </Route>
+      <Route path="/SignUp">
+        <SignUp />
+      </Route>
+
+      <Route path="/Logout">
+      <LogoutPage/>
+      </Route>
         
 
 

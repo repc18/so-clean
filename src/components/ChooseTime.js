@@ -1,7 +1,9 @@
 import React,{useState, useEffect, useCallback} from 'react';
 import { Button } from '@material-ui/core';
 import './ChooseTime.css';
-import Header from "./header/Header";
+import Header from "./Layout-Booking/Header";
+import BookingFooter from "./Layout-Booking/BookingFooter";
+import Footer from '../components/Layout/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +12,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
     table: {
@@ -22,6 +26,19 @@ const useStyles = makeStyles({
 ];
 
 function ChooseTime(props){
+  const history = useHistory()
+
+  const routeChange = () =>{ 
+    let path = `/`; 
+    history.push(path);
+  }
+
+  function confirm() {
+    sessionStorage.removeItem("roomData")
+    sessionStorage.removeItem("workerIds")
+    routeChange();
+  }
+
     const { totalWorker, totalHours, setPage, dateChosen, timeChosen, setTimeChosen, setDateChosen } = props
     const [availableData, setAvailableData] = useState([]);
 
@@ -49,22 +66,28 @@ function ChooseTime(props){
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          "areaAddress": "Daan", 
+          "areaAddress": JSON.parse(sessionStorage.getItem('area')), 
           "workerAmount": totalWorker
         }) //meantime static data(areaAddress, workerAmount)
     };
 
       const response = await fetch("https://soclean-backend.herokuapp.com/api/get_schedule",requestOptions)
       const data = await response.json(); //convert from json to js
-      // console.log(data.schedules);
+      console.log(data.schedules);
 
       for(const [key, value] of Object.entries(data.schedules)){
-        rows.push(createData(key,value));
+        let temp = [];
+        let max = value.length - totalHours;
+        if(max > 0){
+          for(let i = 0; i < max; i++){
+            temp.push(value[i]);
+          }
+          rows.push(createData(key,temp));
+        }
+
         // console.log(value[0])
       }
       setAvailableData(rows);
-      console.log(rows);
-
     }, []);
 
     useEffect(() => {
@@ -76,17 +99,24 @@ function ChooseTime(props){
     // }
 
     const classes = useStyles();
+    let message;
+    if (availableData.length === 0) {
+      message = <h5 className="text-center">No available time, please press the back button</h5>;
+    } else {
+      message = <h5 className="text-center">Working duration: {totalHours} hour(s)</h5>;
+    }
 
     return(
         <div>
-        <Header></Header>
+        {/* <Header></Header> */}
         <div>
         <br></br>
         <br></br>
         <br></br>
             <h1 className="text-center">Choose Time</h1>
             <h3 className="text-center">Please pick a starting time</h3>
-            <h5 className="text-center">Working duration: {totalHours} hour(s)</h5>
+            <br></br>
+            {message}
             <br></br>
             <div className="inline-div">
                 <h4>Date</h4>
@@ -117,9 +147,11 @@ function ChooseTime(props){
     <br></br>
 
             <div className="inline-div">
-            <Button color="primary">Back</Button>
+            <Link onClick={confirm}><Button color="primary">Back</Button></Link>
             </div>
         </div>
+        {/* <BookingFooter></BookingFooter> */}
+        {/* <Footer></Footer> */}
         </div>
     );
 }

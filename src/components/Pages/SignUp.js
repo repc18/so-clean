@@ -11,9 +11,55 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
+import Select from '@material-ui/core/Select';
 
 
-
+const currencies = [
+  {
+    value: 'Xinyi',
+    label: 'Xinyi',
+  },
+  {
+    value: 'Beitou',
+    label: 'Beitou',
+  },
+  {
+    value: 'Datong',
+    label: 'Datong',
+  },
+  {
+    value: 'Nangang',
+    label: 'Nangang',
+  },
+  {
+    value: 'Songshan',
+    label: 'Songshan',
+  },
+  {
+    value: 'Neihu',
+    label: 'Neihu',
+  },
+  {
+    value: 'Wanhua',
+    label: 'Wanhua',
+  },
+  {
+    value: 'Zhongshan',
+    label: 'Zhongshan',
+  },
+  {
+    value: 'Zhongzheng',
+    label: 'Zhongzheng',
+  },
+  {
+    value: 'Wenshan',
+    label: 'Wenshan',
+  },
+  {
+    value: 'Shilin',
+    label: 'Shilin',
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +85,8 @@ export default function SignUp() {
   const classes = useStyles();
   
   const [User, setUser] = useState({});
+  
+  const [currency, setCurrency] = React.useState('Xinyi');
   
   
 
@@ -74,6 +122,18 @@ function changeHandler(event) {
   console.log(User);
 }
 
+const changeHandler2 = (event) => {
+  const {name, value} = event.target;
+  setUser((prevUser) => {
+    return {...prevUser, [name]: value}
+ })
+
+  setCurrency(event.target.value);
+
+  console.log(User);
+};
+
+
 
 const history = useHistory();
 
@@ -92,7 +152,7 @@ const history = useHistory();
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
                 name="name"
@@ -100,20 +160,8 @@ const history = useHistory();
                 required
                 fullWidth
                 id="name"
-                label="First Name"
+                label="Name"
                 autoFocus
-                onChange={changeHandler}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="area"
-                label="Last Name"
-                name="area"
-                autoComplete="lname"
                 onChange={changeHandler}
               />
             </Grid>
@@ -158,11 +206,14 @@ const history = useHistory();
               />
               </Grid>
               
-              <Grid item xs={15}>              
-              <TextField
+              <Grid item xs={15}>   
+
+              {/* <TextField
+              select="true"
           variant="outlined"
           fullWidth
-          name="Area"
+          id = "area"
+          name="area"
           size={'small'}
           label="Area"
           onChange={changeHandler}
@@ -170,15 +221,27 @@ const history = useHistory();
                 endAdornment: (
                  <datalist id="Area">
                      <option value="Daan"></option>
-                    <option value="XinYi"></option> 
-                    <option value="ShiLin"></option>        
+                    <option value="Xinyi"></option> 
+                    <option value="Beitou"></option>
+                    <option value="Datong"></option>  
+                    <option value="Nangang"></option>  
+                    <option value="Songshan"></option>          
+                    <option value="Neihu"></option>
+                    <option value="Wanhua"></option>  
+                    <option value="Zhongshan"></option>
+                    <option value="Zhongzheng"></option> 
+                    <option value="Wenshan"></option> 
+                    <option value="Shilin"></option> 
+                      
+                      
+
                 </datalist>
                 ),
                 inputProps: {
                       list: "Area"
                 }
               }}             
-              />                      
+              />                       */}
               </Grid>
               <Grid item xs={12}>
               <TextField
@@ -195,7 +258,7 @@ const history = useHistory();
               </Grid>
        
              <Grid item xs={15}>              
-              <TextField
+              {/* <TextField
           variant="outlined"
           name="paymentMethod"
           fullWidth
@@ -207,15 +270,37 @@ const history = useHistory();
                  <datalist id="paymentMethod">
                     <option value="Visa"></option>
                     <option value="Cash"></option> 
-                    <option value="LinePay"></option>
-                    <option value="JkoPay"></option>        
+                    <option value="Linepay"></option>
+                        
                 </datalist>
                 ),
                 inputProps: {
                       list: "paymentMethod"
                 }
               }}             
-              />                      
+              />                       */}
+
+<TextField
+          id="area"
+          name="area"
+          select
+          label="Select Area"
+          value={currency}
+          onChange={changeHandler2}
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Please select your address area"
+          variant="outlined"
+        >
+          {currencies.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
+
+
               </Grid>
                       
             <Grid item xs={12}>

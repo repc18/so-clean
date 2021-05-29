@@ -1,15 +1,12 @@
 import React from 'react';
 import classes from './Home.module.css';
 
-
-
-
-const Home = () => {
+const LogoutPage = () => {
   return (
     <section className={classes.starting}>
-      <h1>Welcome!  Please login!</h1>
+      <h1>Logged Out!</h1>
     </section>
   );
 };
 
-export default Home
+export default LogoutPage

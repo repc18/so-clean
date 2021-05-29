@@ -11,9 +11,11 @@ import {Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import "./ChooseRoom.css";
-import Header from "./header/Header";
+import Header from "./Layout-Booking/Header";
 import ChoosePayment from './ChoosePayment';
 import ChooseTime from './ChooseTime';
+import BookingFooter from './Layout-Booking/BookingFooter';
+import Footer from '../components/Layout/Footer';
 
 
 // const useStyles = makeStyles((theme) => ({
@@ -30,6 +32,8 @@ function ChooseRoom(){
     // const classes = useStyles(); //material-ui theme function
     const [totalHours, setTotalHours] = useState(0);
     const [totalWorker, setTotalWorker] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalManhour, setTotalManhour] = useState(0);
 
     const [dateChosen, setDateChosen] = useState("");
     const [timeChosen, setTimeChosen] = useState("");
@@ -85,12 +89,14 @@ function ChooseRoom(){
     function setWorkerAmount(roomOptions, hours){
       console.log(roomOptions);
       let totalManHour = 0;
-      
+
       totalManHour = totalManHour + (roomOptions.bedroom.quantity * roomOptions.bedroom.size);
       totalManHour = totalManHour + (roomOptions.livingroom.quantity * roomOptions.livingroom.size);
       totalManHour = totalManHour + (roomOptions.kitchen.quantity * roomOptions.kitchen.size);
       totalManHour = totalManHour + (roomOptions.bathroom.quantity * roomOptions.bathroom.size);
       totalManHour = totalManHour + (roomOptions.garage.quantity * roomOptions.garage.size);
+      setTotalManhour(totalManHour);
+      setTotalPrice(totalManHour * 500);
       console.log(totalManHour);
       // console.log(hours);
       if(hours === 0 || hours === null){
@@ -199,70 +205,68 @@ function ChooseRoom(){
     const renderPage = () => {
       if(page === 1){
         return <form>
-        <Header></Header>
-         
           <div>
           <br></br>
           <br></br>
           <br></br>
-          <h2 className="text-center">Please Choose And Add Your Room Details</h2>
-          <div className="room-options-header">
-            <h3>Room Type</h3>
-            <h3>Quantity</h3>
-            <h3>Size</h3>
-          </div>
+            <h2 className="text-center">Please Choose And Add Your Room Details</h2>
+            <div className="room-options-header">
+              <h3>Room Type</h3>
+              <h3>Quantity</h3>
+              <h3>Size</h3>
+            </div>
           <br></br>
-          <h5>Bedroom</h5>
-          <div className="room-options">
+            <h5>Bedroom</h5>
+            <div className="room-options">
               <img src={bedroom} width="200" height="200" alt="Bedroom" />
               <input type="number" min="0" max="20" onChange={bedroomQuantityChangeHandler} ></input>
               <select id="rooms" onChange={bedroomSizeChangeHandler}>
               <option value="0.5" >Small</option>
               <option value="1">Medium</option>
               <option value="1.2">Large</option>
-            </select>
-          </div>
-          <h5>Living Room</h5>
-          <div className="room-options">
+              </select>
+            </div>
+            <h5>Living Room</h5>
+            <div className="room-options">
               <img src={livingRoom} width="200" height="200" alt="Dining and Living Room" />
               <input type="number" min="0" max="20" onChange={livingroomQuantityChangeHandler} ></input>
               <select id="rooms" onChange={livingroomSizeChangeHandler}>
               <option value="0.5" >Small</option>
               <option value="1">Medium</option>
               <option value="1.2">Large</option>
-          </select>
-          </div>
-          <h5>Kitchen</h5>
-          <div className="room-options">
+            </select>
+            </div>
+            <h5>Kitchen</h5>
+            <div className="room-options">
               <img src={kitchen} width="200" height="200" alt="Kitchen" />
               <input type="number" min="0" max="20" onChange={kitchenQuantityChangeHandler} ></input>
               <select id="rooms" onChange={kitchenSizeChangeHandler}>
               <option value="0.5" >Small</option>
               <option value="1">Medium</option>
               <option value="1.2">Large</option>
-          </select>
-          </div>
-          <h5>Bathroom</h5>
-          <div className="room-options">
+            </select>
+            </div>
+            <h5>Bathroom</h5>
+            <div className="room-options">
               <img src={bathroom} width="200" height="200" alt="Bathroom" />
               <input type="number" min="0" max="20" onChange={bathroomQuantityChangeHandler} ></input>
               <select id="rooms" onChange={bathroomSizeChangeHandler}>
               <option value="0.5" >Small</option>
               <option value="1">Medium</option>
               <option value="1.2">Large</option>
-          </select>        
-          </div>
-          <h5>Garage</h5>
-          <div className="room-options">
+            </select>        
+            </div>
+            <h5>Garage</h5>
+            <div className="room-options">
               <img src={garage} width="200" height="200" alt="Garage" />
               <input type="number" min="0" max="20" onChange={garageQuantityChangeHandler} ></input>
               <select id="rooms" onChange={garageSizeChangeHandler}>
               <option value="0.5" >Small</option>
               <option value="1">Medium</option>
               <option value="1.2">Large</option>
-          </select>        
-          </div>
-          <div align="center">
+            </select>        
+            </div>
+            <div align="center">
           <br></br>
               <h5>How many hours?</h5>
               <TextField id="outlined-basic" label="" variant="outlined" onChange={totalHoursChangeHandler}/>
@@ -271,22 +275,27 @@ function ChooseRoom(){
 
               <h5>Worker Amount</h5>
               <p>{totalWorker}</p>
-          </div>
-          <div className="text-center">
-          <Button variant="outlined" color="primary" onClick={() => setPage(2)}>
-                Continue
+              
+              <h5>Price</h5>
+              <p>{totalPrice}</p>
+            </div>
+            <div className="text-center">
+            <Button variant="outlined" color="primary" onClick={() => setPage(2)}>
+                  Continue
               </Button>
-          <Link to="/"><Button variant="outlined" color="primary">
-                Back
-              </Button>
+            <Link to="/"><Button variant="outlined" color="primary">
+                Back</Button>
               </Link>
-          </div>
+            </div>
+            <div></div>
         </div>
+        {/* <BookingFooter></BookingFooter> */}
+        {/* <Footer></Footer> */}
         </form>
       }else if(page === 2){
         return <ChooseTime totalHours={totalHours} totalWorker={totalWorker} setPage={setPage} dateChosen={dateChosen} timeChosen={timeChosen} setDateChosen={setDateChosen} setTimeChosen={setTimeChosen}/>
       }else if(page === 3){
-        return <ChoosePayment payment={payment} setPayment={setPayment} setPage={setPage} totalHours={totalHours} totalWorker={totalWorker} dateChosen={dateChosen} timeChosen={timeChosen} roomOptions={roomOptions}/>
+        return <ChoosePayment payment={payment} setPayment={setPayment} setPage={setPage} totalHours={totalHours} totalWorker={totalWorker} dateChosen={dateChosen} timeChosen={timeChosen} roomOptions={roomOptions} totalManhour={totalManhour} totalPrice={totalPrice}/>
       }
     }
 

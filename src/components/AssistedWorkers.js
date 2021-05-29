@@ -3,12 +3,26 @@ import {useHistory} from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Header from "./header/Header";
+import Header from "./Layout-Booking/Header";
+import BookingFooter from "./Layout-Booking/BookingFooter";
 import _ from 'lodash'
+import { Link } from 'react-router-dom';
 
 function AssistedWorkers(props){
   const history = useHistory()
   const [asistedWorkers,setAssistedWorkers] = useState([]);
+
+  const routeChange = () =>{ 
+    let path = `/`; 
+    history.push(path);
+  }
+
+  function confirm() {
+    sessionStorage.removeItem("roomData")
+    sessionStorage.removeItem("workerIds")
+    routeChange();
+  }
+
 
   const fetchAssistedWorker = async( workerIds) => {   
 
@@ -72,11 +86,11 @@ function AssistedWorkers(props){
 
     return(
         <div>
-        <Header></Header>
+        {/* <Header></Header> */}
         <br></br>
         <br></br>
         <br></br>
-            <h1 className="text-center">Your Assisted Workers</h1>
+            <h1 className="text-center">Your Assigned Workers</h1>
             {/* <div className="inline-div">
                 <h4>Image</h4>
                 <h4>Worker Details</h4>
@@ -85,8 +99,9 @@ function AssistedWorkers(props){
               {asistedWorkers.map(renderCard)}
             </div>
             <div>
-                <Button color="primary">Confirm</Button>
+            <Link onClick={confirm}>Back to Home</Link>
             </div>
+            {/* <BookingFooter></BookingFooter> */}
         </div>
     );
 }

@@ -12,7 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
-
+import MainHeader from '../Layout/MainHeader';
+import Footer from '../Layout/Footer';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login(props) {
-  const {setToken, setName, setId, setPhone, setEmail} = props;
+  const {setToken, setName, setId, setPhone, setEmail, setAddress, setArea} = props;
   const classes = useStyles();
   const [email, setLoginEmail] = useState();
   const [password, setPassword] = useState();
@@ -53,6 +54,8 @@ export default function Login(props) {
     setPhone(data.phone);
     setEmail(data.email);
     setId(data._id);
+    setAddress(data.address);
+    setArea(data.area);
     routeChange();
   }
 
@@ -82,12 +85,14 @@ function changeHandler(event) {
 const history = useHistory();
 
   const routeChange = () =>{ 
-    let path = `chooseRoom`; 
+    let path = `/`; 
     history.push(path);
   }
 
 
   return (
+    <div>
+{/* <MainHeader></MainHeader> */}
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -157,6 +162,9 @@ const history = useHistory();
 
         </Box>
     </Container>
+    {/* <Footer></Footer> */}
+    </div>
+    
   );
 }
 Login.propTypes = {
