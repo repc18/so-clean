@@ -59,6 +59,10 @@ const currencies = [
     value: 'Shilin',
     label: 'Shilin',
   },
+  {
+    value: 'Daan',
+    label: 'Daan',
+  },
 ];
 
 const useStyles = makeStyles((theme) => ({

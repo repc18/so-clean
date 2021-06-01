@@ -26,6 +26,10 @@ import LogoutPage from './components/Pages/LogoutPage';
 import SecondHeader from './components/Layout/SecondHeader';
 import Home2 from './components/Pages/Home2';
 
+import FAQ from './components/Pages/FAQ';
+import ContactUs from './components/Pages/ContactUs';
+import AboutUs from './components/Pages/AboutUs';
+
 function App(){
 
   const { token, setToken } = useToken();
@@ -59,6 +63,17 @@ function App(){
       <LogoutPage/>
     </Route>
 
+
+    <Route path="/ContactUs">
+      <ContactUs/>
+    </Route>
+    <Route path="/AboutUs">
+      <AboutUs/>
+    </Route>
+    <Route path="/FAQ">
+      <FAQ/>
+    </Route>
+
     <Footer/>
       </main>
     </div>
@@ -83,6 +98,16 @@ function App(){
       <Route path="/Logout">
       <LogoutPage/>
       </Route>
+
+      <Route path="/ContactUs">
+      <ContactUs/>
+    </Route>
+    <Route path="/AboutUs">
+      <AboutUs/>
+    </Route>
+    <Route path="/FAQ">
+      <FAQ/>
+    </Route>
         
 
 
